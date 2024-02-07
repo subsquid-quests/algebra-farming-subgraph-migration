@@ -1,0 +1,27 @@
+
+{
+  "name": "algebra-farming-subgraph",
+  "version": "1.0.0",
+  "repository": "https://github.com/cryptoalgebra/algebra-subgraph",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "codegen": "graph codegen --output-dir src/types/",
+    "build": "graph build",
+    "create-local": "graph create stellaswap/conliq-farming --node http://44.230.132.226:8020",
+    "deploy-local": "graph deploy stellaswap/conliq-farming --debug --ipfs http://44.230.132.226:5001 --node http://44.230.132.226:8020",
+    "create-pulse": "graph create cryptoalgebra/algebra-farming --node http://3.16.122.80:8120/",
+    "deploy-pulse": "graph deploy cryptoalgebra/algebra-farming --debug --ipfs http://3.16.122.80:5101 --node http://3.16.122.80:8120/",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token c048f4931db84e1c92efefd9d4bef642 iliaazhel/algebra-farming subgraph.yaml",
+    "deploy-dev": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ iliaazhel/algebra-dev-staker subgraph.yaml"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "0.22.1",
+    "@graphprotocol/graph-ts": "0.22.1",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.2"
+  }
+}

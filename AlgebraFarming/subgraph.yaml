@@ -1,0 +1,151 @@
+specVersion: 0.0.2
+description: Algebra is a Innovative DEX with concentrated liquidity, adaptive fee, build-in farming etc.
+schema:
+  file: ./schema.graphql
+dataSources:
+- kind: ethereum/contract
+  name: NonfungiblePositionManager
+  network: moonbeam
+  source:
+      address: '0x1FF2ADAa387dD27c22b31086E658108588eDa03a'
+      abi: NonfungiblePositionManager
+      startBlock: 2649799
+  mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/position-manager.ts
+      entities:
+        - Deposit
+        - Token
+      abis:
+        - name: NonfungiblePositionManager
+          file: ./abis/NonfungiblePositionManager.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint128,uint256,uint256,address)
+          handler: handleIncreaseLiquidity
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+- kind: ethereum/contract
+  name: EternalFarming
+  network: moonbeam
+  source:
+      address: '0xd4b2B7DC9Bc1C47852851f4C5Dc345eabA1A5279'
+      abi: EternalFarming
+      startBlock: 2649799
+  mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/eternalFarming.ts
+      entities:
+        - Deposit
+        - Token
+        - EternalFarming
+        - Reward
+      abis:
+        - name: EternalFarming
+          file: ./abis/EternalFarming.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: EternalFarmingCreated(indexed address,indexed address,indexed address,address,uint256,uint256,uint256,uint256,(uint256,uint256,uint256,uint32,uint32,uint32),address,uint24)
+          handler: handleIncentiveCreated
+        - event: RewardClaimed(indexed address,uint256,indexed address,indexed address)
+          handler: handleRewardClaimed
+        - event: FarmEntered(indexed uint256,indexed bytes32,uint128,uint256)
+          handler: handleTokenStaked
+        - event: FarmEnded(indexed uint256,indexed bytes32,indexed address,address,address,uint256,uint256)
+          handler: handleTokenUnstaked
+        - event: IncentiveDetached(indexed address,indexed address,indexed address,address,uint256,uint256)
+          handler: handleDetached
+        - event: IncentiveAttached(indexed address,indexed address,indexed address,address,uint256,uint256)
+          handler: handleAttached
+        - event: RewardsRatesChanged(uint128,uint128,bytes32)
+          handler: handleRewardsRatesChanged
+        - event: RewardsAdded(uint256,uint256,bytes32)
+          handler: handleRewardsAdded
+        - event: RewardsCollected(uint256,bytes32,uint256,uint256)
+          handler: handleCollect
+- kind: ethereum/contract
+  name: FarmingCenter
+  network: moonbeam
+  source:
+      address: '0x0D4F8A55a5B2583189468ca3b0A32d972f90e6e5'
+      abi: FarmingCenter
+      startBlock: 2649799
+  mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/center.ts
+      entities:
+        - Deposit
+        - Token
+      abis:
+        - name: FarmingCenter
+          file: ./abis/FarmingCenter.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+- kind: ethereum/contract
+  name: LimitFarming
+  network: moonbeam
+  source:
+      address: '0xF722a295aBD8cFb691C78Dd9b6699701491c3ff5'
+      abi: LimitFarming
+      startBlock: 2649799 
+  mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript 
+      file: ./src/mappings/limitFarming.ts
+      entities:
+        - Deposit
+        - Token
+        - LimitFarming
+        - Reward
+      abis:
+        - name: LimitFarming
+          file: ./abis/LimitFarming.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: LimitFarmingCreated(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256,(uint256,uint256,uint256,uint32,uint32,uint32),address,uint24,uint32)
+          handler: handleIncentiveCreated
+        - event: RewardClaimed(indexed address,uint256,indexed address,indexed address)
+          handler: handleRewardClaimed
+        - event: FarmEntered(indexed uint256,indexed bytes32,uint128,uint256)
+          handler: handleTokenStaked
+        - event: FarmEnded(indexed uint256,indexed bytes32,indexed address,address,address,uint256,uint256)
+          handler: handleTokenUnstaked
+        - event: IncentiveDetached(indexed address,indexed address,indexed address,address,uint256,uint256)
+          handler: handleDetached
+        - event: IncentiveAttached(indexed address,indexed address,indexed address,address,uint256,uint256)
+          handler: handleAttached
+        - event: RewardsAdded(uint256,uint256,bytes32)
+          handler: handleRewardsAdded
+        - event: RewardAmountsDecreased(uint256,uint256,bytes32)
+          handler: handleRewardAmountsDecreased

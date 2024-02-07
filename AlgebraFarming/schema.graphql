@@ -1,0 +1,78 @@
+type LimitFarming @entity {
+  id: ID!
+  createdAtTimestamp: BigInt!
+  rewardToken: Bytes!
+  bonusRewardToken: Bytes!
+  pool: Bytes!
+  startTime: BigInt!
+  endTime: BigInt!
+  reward: BigInt!
+  bonusReward: BigInt!
+  isDetached: Boolean
+  minRangeLength: BigInt!
+  tokenAmountForTier1: BigInt!
+  tokenAmountForTier2: BigInt!
+  tokenAmountForTier3: BigInt!
+  tier1Multiplier: BigInt!
+  tier2Multiplier: BigInt!
+  tier3Multiplier: BigInt!
+  multiplierToken: Bytes!
+  enterStartTime: BigInt!
+}
+
+type EternalFarming @entity {
+  id: ID!
+  rewardToken: Bytes!
+  bonusRewardToken: Bytes!
+  virtualPool: Bytes!
+  pool: Bytes!
+  startTime: BigInt!
+  endTime: BigInt!
+  reward: BigInt!
+  bonusReward: BigInt!
+  rewardRate: BigInt!
+  bonusRewardRate: BigInt!
+  isDetached: Boolean
+  minRangeLength: BigInt!
+  tokenAmountForTier1: BigInt!
+  tokenAmountForTier2: BigInt!
+  tokenAmountForTier3: BigInt!
+  tier1Multiplier: BigInt!
+  tier2Multiplier: BigInt!
+  tier3Multiplier: BigInt!
+  multiplierToken: Bytes!
+}
+
+type Deposit @entity {
+  id: ID!
+  L2tokenId: BigInt!
+  owner: Bytes!
+  onFarmingCenter: Boolean!
+  pool: Bytes!
+  limitFarming: Bytes
+  eternalFarming: Bytes
+  enteredInEternalFarming: BigInt 
+  liquidity: BigInt!
+  rangeLength: BigInt!
+  tokensLockedLimit: BigInt!
+  tokensLockedEternal: BigInt!
+  tierLimit: BigInt!
+  tierEternal: BigInt! 
+}
+
+type Reward @entity{
+  id: ID!
+  rewardAddress: Bytes!
+  amount: BigInt!
+  owner: Bytes!
+}
+
+type Token @entity{
+  id: ID!
+  # token symbol
+  symbol: String!
+  # token name
+  name: String!
+  # token decimals
+  decimals: BigInt!
+}

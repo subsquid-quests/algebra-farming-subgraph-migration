@@ -81,7 +81,7 @@ The subgraph took an extremely long time to sync on TheGraph. The StellaSwap tea
 
 tSQD rewards will be delivered via the [quests page](https://app.subsquid.io/quests) of Subsquid Cloud. Make sure you use the same GitHub handle to make a submission and when linking to that page.
 
-USDT rewards from StellaSwap will be sent to addresses individually agreed upon with each winner. We'll make a GitHub issue in each of the winning repos for the discussion.
+STELLA rewards from StellaSwap will be sent to addresses individually agreed upon with each winner. We'll make a GitHub issue in each of the winning repos for the discussion.
 
 Winners (both the five selected by Subsquid and the two selected by StellaSwap) will be listed at the quest repository README. If you do not wish to be listed please tell us that in an issue in your submission repo.
 

@@ -17,7 +17,7 @@ Migrate the [Algebra Farming subgraph](https://thegraph.com/hosted-service/subgr
 > [!IMPORTANT]
 > This quest is sponsored by [StellaSwap](https://stellaswap.com) who generously offered to provide two extra rewards of $500 (in STELLA tokens) each. The rewards will be given to the authors of two submissions selected by StellaSwap from the pool of five Subsquid-selected winners. See [Special considerations](#special-considerations) for extra info.
 
-Subgraph source code is available at the `AlgebraFarming` folder or this repo. The resulting squid should match the GraphQL API of the subgraph as close as possible, by migrating `schema.graphql` (see [Permissible deviations](#permissible-deviations-from-the-subgraph-schema)). The judges reserve the right to request improvements afther the initial review of the submission. Reach out to the [Discord Channel]( https://discord.com/channels/857105545135390731/1155812879770058783) for any tech questions regarding this quest. You can use the ```template``` squid as a starter.
+Subgraph source code is available at the `AlgebraFarming` folder or this repo. The resulting squid should match the GraphQL API of the subgraph as close as possible, by migrating `schema.graphql` (see [Permissible deviations](#permissible-deviations-from-the-subgraph-schema)). The judges reserve the right to request improvements after the initial review of the submission. Reach out to the [Discord Channel]( https://discord.com/channels/857105545135390731/1155812879770058783) for any tech questions regarding this quest. You can use the ```template``` squid as a starter.
 
 # Quest Info
 

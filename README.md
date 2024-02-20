@@ -23,7 +23,7 @@ Subgraph source code is available at the `AlgebraFarming` folder or this repo. T
 
 | Category         | Skill Level                           | Time required (hours) | Max Participants | Reward                                | Status |
 | ---------------- | ------------------------------------- | --------------------- | ---------------- | ------------------------------------- | ------ |
-| Migration        | $\textcolor{orange}{\textsf{Medium}}$ | ~10                   | 5                | $\textcolor{red}{\textsf{200tSQD}}$ + StellaSwap rewards | open   |
+| Migration        | $\textcolor{orange}{\textsf{Medium}}$ | ~10                   | 10               | $\textcolor{red}{\textsf{200tSQD}}$ + StellaSwap rewards | open   |
 
 Two of the winning submissions will be selected by StellaSwap for extra rewards of $500 (in STELLA tokens) each.
 

@@ -1,0 +1,227 @@
+NPM-CI(1)                                                                                                                                                                                                  NPM-CI(1)
+
+NNAAMMEE
+       nnppmm--ccii - Clean install a project
+
+   SSyynnooppssiiss
+         npm ci
+
+         aliases: clean-install, ic, install-clean, isntall-clean
+
+   DDeessccrriippttiioonn
+       This command is similar to npm help install, except it's meant to be used in automated environments such as test platforms, continuous integration, and deployment -- or any situation where you want to make
+       sure you're doing a clean install of your dependencies.
+
+       The main differences between using nnppmm iinnssttaallll and nnppmm ccii are:
+
+       •   The project mmuusstt have an existing ppaacckkaaggee--lloocckk..jjssoonn or nnppmm--sshhrriinnkkwwrraapp..jjssoonn.
+
+       •   If dependencies in the package lock do not match those in ppaacckkaaggee..jjssoonn, nnppmm ccii will exit with an error, instead of updating the package lock.
+
+       •   nnppmm ccii can only install entire projects at a time: individual dependencies cannot be added with this command.
+
+       •   If a nnooddee__mmoodduulleess is already present, it will be automatically removed before nnppmm ccii begins its install.
+
+       •   It will never write to ppaacckkaaggee..jjssoonn or any of the package-locks: installs are essentially frozen.
+
+       NOTE: If you create your ppaacckkaaggee--lloocckk..jjssoonn file by running nnppmm iinnssttaallll with flags that can affect the shape of your dependency tree, such as ----lleeggaaccyy--ppeeeerr--ddeeppss or ----iinnssttaallll--lliinnkkss, you _m_u_s_t provide the same
+       flags to nnppmm ccii or you are likely to encounter errors. An easy way to do this is to run, for example, nnppmm ccoonnffiigg sseett lleeggaaccyy--ppeeeerr--ddeeppss==ttrruuee ----llooccaattiioonn==pprroojjeecctt and commit the ..nnppmmrrcc file to your repo.
+
+   EExxaammppllee
+       Make sure you have a package-lock and an up-to-date install:
+
+         $ cd ./my/npm/project
+         $ npm install
+         added 154 packages in 10s
+         $ ls | grep package-lock
+
+       Run nnppmm ccii in that project
+
+         $ npm ci
+         added 154 packages in 5s
+
+       Configure Travis CI to build using nnppmm ccii instead of nnppmm iinnssttaallll:
+
+         # .travis.yml
+         install:
+         - npm ci
+         # keep the npm cache around to speed up installs
+         cache:
+           directories:
+           - "$HOME/.npm"
+
+   CCoonnffiigguurraattiioonn
+   iinnssttaallll--ssttrraatteeggyy
+       •   Default: "hoisted"
+
+       •   Type: "hoisted", "nested", "shallow", or "linked"
+
+       Sets  the  strategy  for  installing  packages  in  node_modules. hoisted (default): Install non-duplicated in top-level, and duplicated as necessary within directory structure. nested: (formerly --legacy-
+       bundling) install in place, no hoisting. shallow (formerly --global-style) only install direct deps at top-level. linked: (experimental) install in node_modules/.store, link in place, unhoisted.
+
+   lleeggaaccyy--bbuunnddlliinngg
+       •   Default: false
+
+       •   Type: Boolean
+
+       •   DEPRECATED: This option has been deprecated in favor of ----iinnssttaallll--ssttrraatteeggyy==nneesstteedd
+
+       Instead of hoisting package installs in nnooddee__mmoodduulleess, install packages in the same manner that they are depended on. This may cause very deep directory structures and duplicate package installs as there is
+       no de-duplicating. Sets ----iinnssttaallll--ssttrraatteeggyy==nneesstteedd.
+
+   gglloobbaall--ssttyyllee
+       •   Default: false
+
+       •   Type: Boolean
+
+       •   DEPRECATED: This option has been deprecated in favor of ----iinnssttaallll--ssttrraatteeggyy==sshhaallllooww
+
+       Only install direct dependencies in the top level nnooddee__mmoodduulleess, but hoist on deeper dependencies. Sets ----iinnssttaallll--ssttrraatteeggyy==sshhaallllooww.
+
+   oommiitt
+       •   Default: 'dev' if the NNOODDEE__EENNVV environment variable is set to 'production', otherwise empty.
+
+       •   Type: "dev", "optional", or "peer" (can be set multiple times)
+
+       Dependency types to omit from the installation tree on disk.
+
+       Note that these dependencies _a_r_e still resolved and added to the ppaacckkaaggee--lloocckk..jjssoonn or nnppmm--sshhrriinnkkwwrraapp..jjssoonn file. They are just not physically installed on disk.
+
+       If a package type appears in both the ----iinncclluuddee and ----oommiitt lists, then it will be included.
+
+       If the resulting omit list includes ''ddeevv'', then the NNOODDEE__EENNVV environment variable will be set to ''pprroodduuccttiioonn'' for all lifecycle scripts.
+
+   iinncclluuddee
+       •   Default:
+
+       •   Type: "prod", "dev", "optional", or "peer" (can be set multiple times)
+
+       Option that allows for defining which types of dependencies to install.
+
+       This is the inverse of ----oommiitt==<<ttyyppee>>.
+
+       Dependency types specified in ----iinncclluuddee will not be omitted, regardless of the order in which omit/include are specified on the command-line.
+
+   ssttrriicctt--ppeeeerr--ddeeppss
+       •   Default: false
+
+       •   Type: Boolean
+
+       If  set  to ttrruuee, and ----lleeggaaccyy--ppeeeerr--ddeeppss is not set, then _a_n_y conflicting ppeeeerrDDeeppeennddeenncciieess will be treated as an install failure, even if npm could reasonably guess the appropriate resolution based on non-
+       peer dependency relationships.
+
+       By default, conflicting ppeeeerrDDeeppeennddeenncciieess deep in the dependency graph will be resolved using the nearest non-peer dependency specification, even if doing so will result in some packages  receiving  a  peer
+       dependency outside the range set in their package's ppeeeerrDDeeppeennddeenncciieess object.
+
+       When such an override is performed, a warning is printed, explaining the conflict and the packages involved. If ----ssttrriicctt--ppeeeerr--ddeeppss is set, then this warning is treated as a failure.
+
+   ffoorreeggrroouunndd--ssccrriippttss
+       •   Default: false
+
+       •   Type: Boolean
+
+       Run all build scripts (ie, pprreeiinnssttaallll, iinnssttaallll, and ppoossttiinnssttaallll) scripts for installed packages in the foreground process, sharing standard input, output, and error with the main npm process.
+
+       Note that this will generally make installs run slower, and be much noisier, but can be useful for debugging.
+
+   iiggnnoorree--ssccrriippttss
+       •   Default: false
+
+       •   Type: Boolean
+
+       If true, npm does not run scripts specified in package.json files.
+
+       Note  that commands explicitly intended to run a particular script, such as nnppmm ssttaarrtt, nnppmm ssttoopp, nnppmm rreessttaarrtt, nnppmm tteesstt, and nnppmm rruunn--ssccrriipptt will still run their intended script if iiggnnoorree--ssccrriippttss is set, but
+       they will _n_o_t run any pre- or post-scripts.
+
+   aauuddiitt
+       •   Default: true
+
+       •   Type: Boolean
+
+       When "true" submit audit reports alongside the current npm command to the default registry and all registries configured for scopes. See the documentation for npm help audit for details on what is  submit‐
+       ted.
+
+   bbiinn--lliinnkkss
+       •   Default: true
+
+       •   Type: Boolean
+
+       Tells npm to create symlinks (or ..ccmmdd shims on Windows) for package executables.
+
+       Set to false to have it not do this. This can be used to work around the fact that some file systems don't support symlinks, even on ostensibly Unix systems.
+
+   ffuunndd
+       •   Default: true
+
+       •   Type: Boolean
+
+       When "true" displays the message at the end of each nnppmm iinnssttaallll acknowledging the number of dependencies looking for funding. See npm help fund for details.
+
+   ddrryy--rruunn
+       •   Default: false
+
+       •   Type: Boolean
+
+       Indicates  that  you don't want npm to make any changes and that it should only report what it would have done. This can be passed into any of the commands that modify your local installation, eg, iinnssttaallll,
+       uuppddaattee, ddeedduuppee, uunniinnssttaallll, as well as ppaacckk and ppuubblliisshh.
+
+       Note: This is NOT honored by other network related commands, eg ddiisstt--ttaaggss, oowwnneerr, etc.
+
+   wwoorrkkssppaaccee
+       •   Default:
+
+       •   Type: String (can be set multiple times)
+
+       Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.
+
+       Valid values for the wwoorrkkssppaaccee config are either:
+
+       •   Workspace names
+
+       •   Path to a workspace directory
+
+       •   Path to a parent workspace directory (will result in selecting all workspaces within that folder)
+
+       When set for the nnppmm iinniitt command, this may be set to the folder of a workspace which does not yet exist, to create the folder and set it up as a brand new workspace within the project.
+
+       This value is not exported to the environment for child processes.
+
+   wwoorrkkssppaacceess
+       •   Default: null
+
+       •   Type: null or Boolean
+
+       Set to true to run the command in the context of aallll configured workspaces.
+
+       Explicitly setting this to false will cause commands like iinnssttaallll to ignore workspaces altogether. When not set explicitly:
+
+       •   Commands that operate on the nnooddee__mmoodduulleess tree (install, update, etc.) will link workspaces into the nnooddee__mmoodduulleess folder. - Commands that do other things (test, exec, publish, etc.) will operate on the
+           root project, _u_n_l_e_s_s one or more workspaces are specified in the wwoorrkkssppaaccee config.
+
+       This value is not exported to the environment for child processes.
+
+   iinncclluuddee--wwoorrkkssppaaccee--rroooott
+       •   Default: false
+
+       •   Type: Boolean
+
+       Include the workspace root when workspaces are enabled for a command.
+
+       When false, specifying individual workspaces via the wwoorrkkssppaaccee config, or all workspaces via the wwoorrkkssppaacceess flag, will cause npm to operate only on the specified workspaces, and not on the root project.
+
+       This value is not exported to the environment for child processes.
+
+   iinnssttaallll--lliinnkkss
+       •   Default: false
+
+       •   Type: Boolean
+
+       When set file: protocol dependencies will be packed and installed as regular dependencies instead of creating a symlink. This option has no effect on workspaces.
+
+   SSeeee AAllssoo
+       •   npm help install
+
+       •   ppaacckkaaggee--lloocckk..jjssoonn _⟨_/_c_o_n_f_i_g_u_r_i_n_g_-_n_p_m_/_p_a_c_k_a_g_e_-_l_o_c_k_-_j_s_o_n_⟩
+
+                                                                                                    November 2023                                                                                          NPM-CI(1)
